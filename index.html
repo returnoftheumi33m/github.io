@@ -1,0 +1,209 @@
+
+<!-- saved from url=(0020)https://nachalo.win/ -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Возвращение Умизма в УПА</title>
+  <meta name="description" content="Возвращение Умизма в УПА">
+  <meta property="og:site_name" content="Возвращение Умизма в УПА">
+  <meta property="og:url" content="">
+  <meta property="og:description" content="Возвращение Умизма в УПА">
+  <meta property="og:image" content="bridge.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./Украинское сопротивление_files/css2" rel="stylesheet"> 
+  <style type="text/css">
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #212529;
+      background-color: #fff;
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      :root {
+        scroll-behavior: smooth;
+      }
+    }
+
+    .bg-image {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      left: 0;
+      top: 0;
+    }
+
+    /* Add some content at the bottom of the video/page */
+    .content {
+      height: 100vh;
+      width: 100%;
+      color: white;
+      /* padding: 20px; */
+      text-align: center;
+      z-index: 1;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .title {
+      font-weight: bold;
+      font-size: 2.5em;
+      max-width: 25em;
+      padding-left: 1em;
+      padding-right: 1em;
+      padding-top: 1em;
+    }
+    
+    .subtitle {
+      font-size: 1.5em;
+      padding: 1em;
+      font-weight: 400;
+      background-color: rgba(255, 0, 0, 0.3);
+    }
+
+
+    .timer__items {
+      display: flex;
+      font-size: 6em;
+      align-items: stretch;
+    }
+
+    .timer__item {
+      position: relative;
+      min-width: 60px;
+      margin-left: 0.3em;
+      margin-right: 0.3em;
+      padding-bottom: 15px;
+      text-align: center;
+      line-height: 1;
+      font-weight: bold;
+      color: red;
+    }
+
+    .timer__item::before {
+      content: attr(data-title);
+      display: block;
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      font-size: 1rem;
+      font-weight: normal;
+      /* color: white; */
+    }
+    .timer__divider {
+      width: 1px;
+      padding: 0;
+      margin: 0;
+      opacity: 0.25;
+      background-color: white;
+    }
+
+
+    @media screen and (max-width: 1300px) {
+      body {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      body {
+        font-size: 0.75rem;
+      }
+
+      .timer__items {
+        font-size: 4em;
+      }
+    }
+
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // конечная дата
+      const deadline = new Date("2042-05-09T10:00:00");
+      // id таймера
+      let timerId = null;
+      // склонение числительных
+      function declensionNum(num, words) {
+        return words[(num % 100 > 4 && num % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(num % 10 < 5) ? num % 10 : 5]];
+      }
+      // вычисляем разницу дат и устанавливаем оставшееся времени в качестве содержимого элементов
+      function countdownTimer() {
+        const diff = deadline - new Date();
+        if (diff <= 0) {
+          clearInterval(timerId);
+        }
+        const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
+        const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
+        const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
+        const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
+        $days.textContent = days < 10 ? '0' + days : days;
+        $hours.textContent = hours < 10 ? '0' + hours : hours;
+        $minutes.textContent = minutes < 10 ? '0' + minutes : minutes;
+        $seconds.textContent = seconds < 10 ? '0' + seconds : seconds;
+        $days.dataset.title = declensionNum(days, ['день', 'дня', 'дней']);
+        $hours.dataset.title = declensionNum(hours, ['час', 'часа', 'часов']);
+        $minutes.dataset.title = declensionNum(minutes, ['минута', 'минуты', 'минут']);
+        $seconds.dataset.title = declensionNum(seconds, ['секунда', 'секунды', 'секунд']);
+      }
+      // получаем элементы, содержащие компоненты даты
+      const $days = document.querySelector('.timer__days');
+      const $hours = document.querySelector('.timer__hours');
+      const $minutes = document.querySelector('.timer__minutes');
+      const $seconds = document.querySelector('.timer__seconds');
+      // вызываем функцию countdownTimer
+      countdownTimer();
+      // вызываем функцию countdownTimer каждую секунду
+      timerId = setInterval(countdownTimer, 1000);
+    });
+  </script>
+
+</head>
+
+<body>
+  <img src="bg.jpg" class="bg-image">
+
+  <div class="content">
+    <div class="title">До возвращения Умизма в УПА осталось</div>
+    <div class="timer">
+      <div class="timer__items">
+        <div class="timer__item timer__days" data-title="дней">00</div>
+        <div class="timer__divider"></div>
+        <div class="timer__item timer__hours" data-title="часов">12</div>
+        <div class="timer__divider"></div>
+        <div class="timer__item timer__minutes" data-title="минут">45</div>
+        <div class="timer__divider"></div>
+        <div class="timer__item timer__seconds" data-title="секунда">41</div>
+      </div>
+    </div>
+
+    <div class="subtitle">
+      Когда закончится обратный отсчёт, обратного пути для умизма уже не будет. Когда закончится обратный отсчёт каждый умизм на территории упаленда, центрального зала упа, основного чата и других бесед ПРИНЕСЁТ СЕБЯ В ЖЕРТВУ. Его грехи будут отпущены. Вышеуказанный счётчик это всего лишь отсчёт до момента начала его действий. Инициатив.
+    </div>
+  </div>
+
+
+
+
+</body></html>
